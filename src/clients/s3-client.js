@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 
-class S3Service {
+class S3Client {
+
   constructor() {
     this.s3 = new AWS.S3({
       region: process.env.REGION,
@@ -9,6 +10,13 @@ class S3Service {
     });
   }
 
+  /**
+   * List S3 objects
+   * @param {string} bucket
+   * @param {string} prefix
+   * @throws
+   * @returns {Object}
+   */
   async listObjects(bucket, prefix) {
     const params = {
       Bucket: bucket,
@@ -18,6 +26,13 @@ class S3Service {
     return data.Contents;
   }
 
+  /**
+   * Get S3 object
+   * @param {string} bucket
+   * @param {string} key
+   * @throws
+   * @returns {Object}
+   */
   async getObject(bucket, key) {
     const params = {
       Bucket: bucket,
@@ -27,6 +42,14 @@ class S3Service {
     return data.Body.toString('utf-8');
   }
 
+  /**
+   * Put S3 Object
+   * @param {string} bucket
+   * @param {string} key 
+   * @param {string} content
+   * @throws
+   * @returns {Object}
+   */
   async putObject(bucket, key, content) {
     const params = {
       Bucket: bucket,
@@ -39,4 +62,4 @@ class S3Service {
   }
 }
 
-module.exports = new S3Service();
+module.exports = new S3Client();
