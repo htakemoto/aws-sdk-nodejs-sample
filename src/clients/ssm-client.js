@@ -1,12 +1,9 @@
 const AWS = require('aws-sdk');
 
 class SSMClient {
-
   constructor() {
     this.ssm = new AWS.SSM({
       region: process.env.REGION,
-      accessKeyId: process.env.ACCESS_KEY_ID,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY
     });
   }
 
@@ -27,7 +24,7 @@ class SSMClient {
   async getParameter(name) {
     const params = {
       Name: name,
-      WithDecryption: true // decrypt value when value is encrypted
+      WithDecryption: true, // decrypt value when value is encrypted
     };
     const res = await this.ssm.getParameter(params).promise();
     return res.Parameter;
@@ -49,7 +46,7 @@ class SSMClient {
       Name: name,
       Value: value,
       Overwrite: false,
-      Type: isSecureString ? 'SecureString' : 'String'
+      Type: isSecureString ? 'SecureString' : 'String',
     };
     const res = await this.ssm.putParameter(params).promise();
     return res;
@@ -71,7 +68,7 @@ class SSMClient {
       Name: name,
       Value: value,
       Overwrite: true,
-      Type: isSecureString ? 'SecureString' : 'String'
+      Type: isSecureString ? 'SecureString' : 'String',
     };
     const res = await this.ssm.putParameter(params).promise();
     return res;
@@ -84,7 +81,7 @@ class SSMClient {
    */
   async deleteParameter(name) {
     const params = {
-      Name: name
+      Name: name,
     };
     await this.ssm.deleteParameter(params).promise();
   }

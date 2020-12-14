@@ -1,10 +1,17 @@
 require('dotenv').config();
 
-const ssmClient = require('./clients/ssm-client');
+const sampleRepository = require('./repositories/sample-repository');
 
 (async () => {
   try {
-    // add client object here
+    const obj = {
+      id: '1',
+      message: 'hello world',
+      updatedAt: new Date(),
+    };
+    await sampleRepository.putItem(obj);
+    const item = await sampleRepository.getItemById('1');
+    console.log('getItem', item);
   } catch (err) {
     console.log(err, err.stack);
   }

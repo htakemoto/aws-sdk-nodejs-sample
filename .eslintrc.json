@@ -8,7 +8,6 @@
     "airbnb-base"
   ],
   "rules": {
-    "no-console": "off",
-    "comma-dangle": ["error", "never"]
+    "no-console": "off"
   }
 }

@@ -1,12 +1,9 @@
 const AWS = require('aws-sdk');
 
 class S3Client {
-
   constructor() {
     this.s3 = new AWS.S3({
       region: process.env.REGION,
-      accessKeyId: process.env.ACCESS_KEY_ID,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY
     });
   }
 
@@ -20,7 +17,7 @@ class S3Client {
   async listObjects(bucket, prefix) {
     const params = {
       Bucket: bucket,
-      Prefix: prefix
+      Prefix: prefix,
     };
     const data = await this.s3.listObjectsV2(params).promise();
     return data.Contents;
@@ -36,7 +33,7 @@ class S3Client {
   async getObject(bucket, key) {
     const params = {
       Bucket: bucket,
-      Key: key
+      Key: key,
     };
     const data = await this.s3.getObject(params).promise();
     return data.Body.toString('utf-8');
@@ -45,7 +42,7 @@ class S3Client {
   /**
    * Put S3 Object
    * @param {string} bucket
-   * @param {string} key 
+   * @param {string} key
    * @param {string} content
    * @throws
    * @returns {Object}
@@ -55,7 +52,7 @@ class S3Client {
       Bucket: bucket,
       Key: key,
       ServerSideEncryption: 'AES256',
-      Body: content
+      Body: content,
     };
     const data = await this.s3.putObject(params).promise();
     return data;
